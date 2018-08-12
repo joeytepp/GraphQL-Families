@@ -19,9 +19,16 @@ const familyType = new GraphQLObjectType({
     },
     members: {
       type: GraphQLList(personType),
+      args: {
+        first: { type: GraphQLInt },
+        offset: { type: GraphQLInt }
+      },
       resolve(parent, args) {
         const { name } = parent;
-        return Person.find({ lastName: name });
+        const { first, offset } = args;
+        return Person.find({ lastName: name })
+          .skip(offset)
+          .limit(first);
       }
     }
   })

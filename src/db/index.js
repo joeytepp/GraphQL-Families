@@ -3,7 +3,7 @@ const { Person } = require("../models");
 const seedDB = require("./seed");
 
 mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/families");
 
 module.exports = new Promise((resolve, reject) => {
   Person.countDocuments({}).then(res => {
@@ -14,6 +14,3 @@ module.exports = new Promise((resolve, reject) => {
     }
   });
 });
-// new Person({ firstName: "Joey", lastName: "Tepperman", age: 20 })
-//   .save()
-//   .then(() => console.log("Saved Joey"));
